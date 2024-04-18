@@ -46,6 +46,29 @@ namespace API.Controllers
             };
         }
 
+        [HttpPost("login")]  // POST: api/account/login
+        public async Task<ActionResult<UserDto>> Login([FromBody] LoginDto loginDto)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
+            if (user == null)
+            {
+                return Unauthorized("There is no such user");
+            }
+
+            using var hmac = new HMACSHA512(user.PasswordSalt);
+            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+            if (!computedHash.SequenceEqual(user.PasswordHash))
+            {
+                return Unauthorized("Wrong password");
+            }
+
+            return new UserDto
+            {
+                Username = user.UserName,
+                Token = _tokenService.CreateToken(user),
+            };
+        }
+
         private async Task<bool> UserExists(string username)
         {
             var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == username.ToLower());
