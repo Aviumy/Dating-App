@@ -17,6 +17,7 @@ namespace API.Extensions
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
             services.AddCors();
+            services.AddScoped<ITokenService, TokenService>();
 
             return services;
         }
