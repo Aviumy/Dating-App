@@ -26,7 +26,19 @@ export class NavComponent implements OnInit {
       },
       error: error => {
         console.log(error)
-        this.toastr.error(error.error);
+
+        if (typeof error.error === 'string') {
+          this.toastr.error(error.error);
+        }
+        else {
+          let usernameErrors: any = error.error.errors['Username'];
+          let passwordErrors: any = error.error.errors['Password'];
+
+          this.toastr.error(
+            (usernameErrors ? usernameErrors.join(' ') : '') + ' ' +
+            (passwordErrors ? passwordErrors.join(' ') : '')
+          );
+        }
       },
       complete: () => console.log(this.model.username + " logged in")
     });
