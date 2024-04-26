@@ -1,17 +1,17 @@
-<nav class="navbar navbar-expand navbar-dark bg-dark" aria-label="Second navbar example">
+<nav class="navbar navbar-expand bg-primary" aria-label="Second navbar example">
   <div class="container">
-    <a class="navbar-brand" routerLink="/" routerLinkActive="active">Dating app</a>
+    <a class="navbar-brand text-light" routerLink="/" routerLinkActive="active">Dating app</a>
 
     <ul class="navbar-nav me-auto">
       <ng-container *ngIf="accountService.currentUser$ | async">
         <li class="nav-item">
-          <a class="nav-link" routerLink="/members" routerLinkActive="active">Matches</a>
+          <a class="nav-link text-light" routerLink="/members" routerLinkActive="active">Matches</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/lists" routerLinkActive="active">Lists</a>
+          <a class="nav-link text-light" routerLink="/lists" routerLinkActive="active">Lists</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="/messages" routerLinkActive="active">Messages</a>
+          <a class="nav-link text-light" routerLink="/messages" routerLinkActive="active">Messages</a>
         </li>
       </ng-container>
     </ul>
@@ -35,7 +35,7 @@
              class="form-control me-2"
              type="password"
              placeholder="Password" />
-      <button class="btn btn-outline-success" type="submit">Login</button>
+      <button class="btn btn-info" type="submit">Login</button>
     </form>
   </div>
 </nav>
