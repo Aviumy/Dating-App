@@ -25,20 +25,7 @@ export class NavComponent implements OnInit {
         this.router.navigateByUrl('/members');
       },
       error: error => {
-        console.log(error)
-
-        if (typeof error.error === 'string') {
-          this.toastr.error(error.error);
-        }
-        else {
-          let usernameErrors: any = error.error.errors['Username'];
-          let passwordErrors: any = error.error.errors['Password'];
-
-          this.toastr.error(
-            (usernameErrors ? usernameErrors.join(' ') : '') + ' ' +
-            (passwordErrors ? passwordErrors.join(' ') : '')
-          );
-        }
+        console.log(error);
       },
       complete: () => console.log(this.model.username + " logged in")
     });
