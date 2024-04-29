@@ -7,6 +7,7 @@ import { ListsComponent } from './lists/lists.component';
 import { MessagesComponent } from './messages/messages.component';
 import { authGuard } from './_guards/auth.guard';
 import { TestErrorComponent } from './errors/test-error/test-error.component';
+import { NotFound404Component } from './errors/not-found-404/not-found-404.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,8 +19,9 @@ const routes: Routes = [
       { path: 'messages', component: MessagesComponent },
     ]
   },
-  { path: '**', component: HomeComponent, pathMatch: 'full' },
   { path: 'errors', component: TestErrorComponent },
+  { path: 'not-found', component: NotFound404Component },
+  { path: '**', component: NotFound404Component, pathMatch: 'full' },
 ];
 
 @NgModule({
