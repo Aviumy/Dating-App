@@ -17,6 +17,7 @@ import { SharedModule } from './_modules/shared.module';
 import { TestErrorComponent } from './errors/test-error/test-error.component';
 import { ErrorInterceptor } from './_interceptors/error.interceptor';
 import { NotFound404Component } from './errors/not-found-404/not-found-404.component';
+import { ServerError500Component } from './errors/server-error-500/server-error-500.component';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { NotFound404Component } from './errors/not-found-404/not-found-404.compo
     MessagesComponent,
     TestErrorComponent,
     NotFound404Component,
+    ServerError500Component,
   ],
   imports: [
     BrowserModule,

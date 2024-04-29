@@ -8,6 +8,7 @@ import { MessagesComponent } from './messages/messages.component';
 import { authGuard } from './_guards/auth.guard';
 import { TestErrorComponent } from './errors/test-error/test-error.component';
 import { NotFound404Component } from './errors/not-found-404/not-found-404.component';
+import { ServerError500Component } from './errors/server-error-500/server-error-500.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   },
   { path: 'errors', component: TestErrorComponent },
   { path: 'not-found', component: NotFound404Component },
+  { path: 'server-error', component: ServerError500Component },
   { path: '**', component: NotFound404Component, pathMatch: 'full' },
 ];
 
