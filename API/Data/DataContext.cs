@@ -7,6 +7,7 @@ namespace API.Data
     {
         public DataContext(DbContextOptions options) : base(options)
         {
+            new DataSeeder().Seed(this);
         }
 
         public DbSet<AppUser> Users { get; set; }
