@@ -24,10 +24,6 @@ namespace API.Data
                 }
 
                 await dataContext.Users.AddRangeAsync(users);
-                foreach (var user in users)
-                {
-                    await dataContext.Photos.AddRangeAsync(user.Photos);
-                }
                 await dataContext.SaveChangesAsync();
             }
             catch (Exception ex)
