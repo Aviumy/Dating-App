@@ -15,19 +15,21 @@ namespace API.Data.Repositories
 
         public async Task<IEnumerable<AppUser>> GetAllAsync()
         {
-            var users = await _context.Users.ToListAsync();
+            var users = await _context.Users.Include(p => p.Photos).ToListAsync();
             return users;
         }
 
         public async Task<AppUser> GetAsync(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await _context.Users.Include(p => p.Photos)
+                .FirstOrDefaultAsync(x => x.Id == id);
             return user;
         }
 
         public async Task<AppUser> GetByUsernameAsync(string username)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == username);
+            var user = await _context.Users.Include(p => p.Photos)
+                .FirstOrDefaultAsync(x => x.UserName == username);
             return user;
         }
 
