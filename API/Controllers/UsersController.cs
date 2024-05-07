@@ -11,29 +11,24 @@ namespace API.Controllers
     public class UsersController : BaseApiController
     {
         private readonly IUserRepository _repo;
-        private readonly IMapper _mapper;
 
-        public UsersController(IUserRepository repo, IMapper mapper)
+        public UsersController(IUserRepository repo)
         {
             _repo = repo;
-            _mapper = mapper;
         }
 
         [HttpGet]  // api/users
         public async Task<ActionResult<IEnumerable<MemberDto>>> GetUsers()
         {
-            var users = await _repo.GetAllAsync();
-            var usersToReturn = _mapper.Map<IEnumerable<MemberDto>>(users);
-            return Ok(usersToReturn);
+            var members = await _repo.GetAllMembersAsync();
+            return Ok(members);
         }
 
-        [HttpGet("{id}")]  // api/users/3
-        public async Task<ActionResult<MemberDto>> GetUser(int id)
+        [HttpGet("{username}")]  // api/users/lisa
+        public async Task<ActionResult<MemberDto>> GetUser(string username)
         {
-            var user = await _repo.GetAsync(id);
-            var userToReturn = _mapper.Map<MemberDto>(user);
-            userToReturn.Photos = user.Photos.Select(x => _mapper.Map<PhotoDto>(x)).ToList();
-            return userToReturn;
+            var member = await _repo.GetMemberAsync(username);
+            return member;
         }
     }
 }
