@@ -1,1 +1,7 @@
-<p>member-list works!</p>
+<div class="row">
+  <div class="col">
+    <p *ngFor="let member of members">
+      {{member.nickName}}: {{member.age}}
+    </p>
+  </div>
+</div>
