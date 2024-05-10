@@ -3,7 +3,7 @@
     <h1>Your profile</h1>
   </div>
   <div class="col-8">
-    <div class="alert alert-info">
+    <div class="alert alert-info" *ngIf="editForm.dirty">
       <p><strong>Information: </strong>You have made changes. Any unsaved changes will be lost.</p>
     </div>
   </div>
@@ -32,7 +32,8 @@
       </div>
       <div class="card-footer">
         <button class="btn btn-success col-12"
-                form="editForm">
+                form="editForm"
+                [disabled]="!editForm.dirty">
           Save changes
         </button>
       </div>
