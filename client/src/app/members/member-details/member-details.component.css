@@ -17,3 +17,7 @@
   background-color: white;
   border-top: none;
 }
+
+.gallery {
+  height: 600px;
+}
