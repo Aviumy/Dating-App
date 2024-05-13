@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../_models/user';
 import { Member } from '../../_models/member';
 import { AccountService } from '../../_services/account.service';
@@ -40,5 +40,11 @@ export class MemberEditComponent implements OnInit {
     console.log(this.member);
     this.toastr.success('Changes saved successfully');
     this.editForm?.reset(this.member);
+  }
+
+  @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
+    if (this.editForm?.dirty) {
+      $event.returnValue = true;
+    }
   }
 }

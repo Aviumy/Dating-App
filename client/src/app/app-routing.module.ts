@@ -10,6 +10,7 @@ import { TestErrorComponent } from './errors/test-error/test-error.component';
 import { NotFound404Component } from './errors/not-found-404/not-found-404.component';
 import { ServerError500Component } from './errors/server-error-500/server-error-500.component';
 import { MemberEditComponent } from './members/member-edit/member-edit.component';
+import { preventUnsavedChangesGuard } from './_guards/prevent-unsaved-changes.guard';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,7 +20,7 @@ const routes: Routes = [
       { path: 'members/:username', component: MemberDetailsComponent },
       { path: 'lists', component: ListsComponent },
       { path: 'messages', component: MessagesComponent },
-      { path: 'profile/edit', component: MemberEditComponent },
+      { path: 'profile/edit', component: MemberEditComponent, canDeactivate: [preventUnsavedChangesGuard] },
     ]
   },
   { path: 'errors', component: TestErrorComponent },
