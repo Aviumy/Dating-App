@@ -59,10 +59,5 @@ namespace API.Data.Repositories
             var entriesChanged = await _context.SaveChangesAsync();
             return entriesChanged > 0;
         }
-
-        public void Update(AppUser item)
-        {
-            _context.Entry(item).State = EntityState.Modified;
-        }
     }
 }
