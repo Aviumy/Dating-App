@@ -4,6 +4,7 @@ using API.Interfaces.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -11,10 +12,12 @@ namespace API.Controllers
     public class UsersController : BaseApiController
     {
         private readonly IUserRepository _repo;
+        private readonly IMapper _mapper;
 
-        public UsersController(IUserRepository repo)
+        public UsersController(IUserRepository repo, IMapper mapper)
         {
             _repo = repo;
+            _mapper = mapper;
         }
 
         [HttpGet]  // api/users
@@ -29,6 +32,22 @@ namespace API.Controllers
         {
             var member = await _repo.GetMemberAsync(username);
             return member;
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
+        {
+            var username = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await _repo.GetByUsernameAsync(username);
+            if (user == null)
+                return NotFound();
+
+            _mapper.Map(memberUpdateDto, user);
+
+            if (await _repo.SaveAllAsync())
+                return NoContent();
+            else
+                return BadRequest("Failed to update user.");
         }
     }
 }
