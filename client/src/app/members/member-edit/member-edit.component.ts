@@ -37,9 +37,12 @@ export class MemberEditComponent implements OnInit {
   }
 
   updateMember() {
-    console.log(this.member);
-    this.toastr.success('Changes saved successfully');
-    this.editForm?.reset(this.member);
+    this.membersService.updateMember(this.editForm?.value).subscribe({
+      next: _ => {
+        this.toastr.success('Changes saved successfully');
+        this.editForm?.reset(this.member);
+      }
+    });
   }
 
   @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
