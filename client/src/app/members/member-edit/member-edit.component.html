@@ -43,7 +43,7 @@
   <div class="col-8">
     <tabset class="member-tabset">
       <tab heading="About {{member.nickName}}">
-        <form id="editForm" #editForm="ngForm" (ngSubmit)="updateMember()" autocomplete="off">
+        <form (input)="markFormAsDirty()" id="editForm" #editForm="ngForm" (ngSubmit)="updateMember()" autocomplete="off">
           <h4 class="mt-2">Description</h4>
           <textarea class="form-control"
                     [(ngModel)]="member.introduction"

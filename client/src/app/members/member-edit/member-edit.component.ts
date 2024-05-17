@@ -41,8 +41,13 @@ export class MemberEditComponent implements OnInit {
       next: _ => {
         this.toastr.success('Changes saved successfully');
         this.editForm?.reset(this.member);
+        this.membersService.hasUnsavedProfileChanges = false;
       }
     });
+  }
+
+  markFormAsDirty() {
+    this.membersService.hasUnsavedProfileChanges = true;
   }
 
   @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {

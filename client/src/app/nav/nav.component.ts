@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../_services/account.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { MembersService } from '../_services/members.service';
 
 @Component({
   selector: 'app-nav',
@@ -12,6 +13,7 @@ export class NavComponent implements OnInit {
   model: any = {};
 
   constructor(public accountService: AccountService,
+              private membersService: MembersService,
               private router: Router,
               private toastr: ToastrService) { }
 
@@ -32,7 +34,10 @@ export class NavComponent implements OnInit {
   }
 
   logout() {
-    this.accountService.logout();
     this.router.navigateByUrl('/');
+    this.accountService.clickedLogOutButton = true;
+    if (!this.membersService.hasUnsavedProfileChanges) {
+      this.accountService.logout();
+    }
   }
 }

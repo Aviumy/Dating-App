@@ -11,6 +11,7 @@ import { map, of } from 'rxjs';
 export class MembersService {
   baseUrl = environment.apiUrl;
   members: Member[] = [];
+  hasUnsavedProfileChanges: boolean = false;
 
   constructor(private http: HttpClient) { }
 
