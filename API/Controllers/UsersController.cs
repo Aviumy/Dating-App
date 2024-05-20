@@ -1,10 +1,10 @@
 ﻿using API.DTOs;
 using API.Entities;
+using API.Extensions;
 using API.Interfaces.Repositories;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace API.Controllers
 {
@@ -37,7 +37,7 @@ namespace API.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdateUser(MemberUpdateDto memberUpdateDto)
         {
-            var username = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var username = User.GetUsername();
             var user = await _repo.GetByUsernameAsync(username);
             if (user == null)
                 return NotFound();
