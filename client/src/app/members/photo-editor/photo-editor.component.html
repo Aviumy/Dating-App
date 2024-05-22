@@ -2,7 +2,10 @@
   <div class="col-2 mb-2" *ngFor="let photo of member.photos">
     <img src="{{photo.url}}" alt="photo" class="img-thumbnail mb-1" />
     <div class="text-center">
-      <button class="btn btn-sm me-1">Main</button>
+      <button (click)="setMainPhoto(photo)" [disabled]="photo.isMain"
+              class="btn btn-sm btn-outline-primary me-1">
+        <i class="fa fa-check me-1" *ngIf="photo.isMain"></i>Main
+      </button>
       <button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></button>
     </div>
   </div>
