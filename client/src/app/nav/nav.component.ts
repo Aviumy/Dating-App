@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../_services/account.service';
 import { Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { MembersService } from '../_services/members.service';
+import { Member } from '../_models/member';
+import { take } from 'rxjs';
+import { User } from '../_models/user';
 
 @Component({
   selector: 'app-nav',
@@ -11,13 +13,22 @@ import { MembersService } from '../_services/members.service';
 })
 export class NavComponent implements OnInit {
   model: any = {};
+  member: Member | undefined;
 
   constructor(public accountService: AccountService,
               private membersService: MembersService,
-              private router: Router,
-              private toastr: ToastrService) { }
+              private router: Router) { }
 
   ngOnInit(): void {
+    let user: User | undefined;
+    this.accountService.currentUser$.pipe(take(1)).subscribe({
+      next: u => user = u as User,
+    });
+    if (user) {
+      this.membersService.getMember(user.username).subscribe({
+        next: member => this.member = member,
+      });
+    }
   }
 
   login() {
