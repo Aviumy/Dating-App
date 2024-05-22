@@ -25,16 +25,23 @@ export class NavComponent implements OnInit {
       next: u => user = u as User,
     });
     if (user) {
-      this.membersService.getMember(user.username).subscribe({
-        next: member => this.member = member,
-      });
+      this.getMember(user.username);
     }
+  }
+
+  getMember(username: string) {
+    this.membersService.getMember(username).subscribe({
+      next: member => this.member = member,
+    });
   }
 
   login() {
     this.accountService.login(this.model).subscribe({
       next: response => {
         console.log(response);
+        if (response) {
+          this.getMember(response.username);
+        }
         this.router.navigateByUrl('/members');
       },
       error: error => {
@@ -48,6 +55,7 @@ export class NavComponent implements OnInit {
     this.router.navigateByUrl('/');
     this.accountService.clickedLogOutButton = true;
     if (!this.membersService.hasUnsavedProfileChanges) {
+      this.member = undefined;
       this.accountService.logout();
     }
   }
