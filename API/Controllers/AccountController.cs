@@ -49,7 +49,8 @@ namespace API.Controllers
         [HttpPost("login")]  // POST: api/account/login
         public async Task<ActionResult<UserDto>> Login([FromBody] LoginDto loginDto)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
+            var user = await _context.Users.Include(x => x.Photos)
+                .FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
             if (user == null)
             {
                 return Unauthorized("There is no such user");
@@ -66,6 +67,7 @@ namespace API.Controllers
             {
                 Username = user.UserName,
                 Token = _tokenService.CreateToken(user),
+                MainPhotoUrl = user.Photos.FirstOrDefault(x => x.IsMain)?.Url,
             };
         }
 
