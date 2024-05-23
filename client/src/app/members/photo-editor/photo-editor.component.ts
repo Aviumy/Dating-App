@@ -52,6 +52,9 @@ export class PhotoEditorComponent implements OnInit {
           const index = this.member.photos.indexOf(photo);
           if (index > -1) {
             this.member.photos.splice(index, 1);
+            if (photo.isMain) {
+              this.member.mainPhotoUrl = '';
+            }
           }
         }
       }
