@@ -36,10 +36,13 @@ export class PhotoEditorComponent implements OnInit {
   setMainPhoto(photo: Photo) {
     this.membersService.setMainPhoto(photo.id).subscribe({
       next: () => {
-        if (this.member) {
+        if (this.user && this.member) {
           this.member.photos.forEach(x => x.isMain = false);
           this.member.mainPhotoUrl = photo.url;
           photo.isMain = true;
+
+          this.user.mainPhotoUrl = photo.url;
+          this.accountService.setCurrentUser(this.user);
         }
       }
     });
@@ -48,12 +51,14 @@ export class PhotoEditorComponent implements OnInit {
   deletePhoto(photo: Photo) {
     this.membersService.deletePhoto(photo.id).subscribe({
       next: () => {
-        if (this.member) {
+        if (this.user && this.member) {
           const index = this.member.photos.indexOf(photo);
           if (index > -1) {
             this.member.photos.splice(index, 1);
             if (photo.isMain) {
               this.member.mainPhotoUrl = '';
+              this.user.mainPhotoUrl = '';
+              this.accountService.setCurrentUser(this.user);
             }
           }
         }

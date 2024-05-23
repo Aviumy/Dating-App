@@ -22,7 +22,7 @@
     <div class="dropdown" *ngIf="(accountService.currentUser$ | async) as user" dropdown>
       <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>
         <div class="list-inline-item" *ngIf="member">
-          <img src="{{member.mainPhotoUrl || './assets/user.png'}}" alt="pfp" class="rounded" />
+          <img src="{{user.mainPhotoUrl || './assets/user.png'}}" alt="pfp" class="rounded" />
         </div>
         <div class="list-inline-item">{{user?.username | titlecase}}</div>
       </a>
