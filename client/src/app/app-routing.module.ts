@@ -23,7 +23,7 @@ const routes: Routes = [
       { path: 'profile/edit', component: MemberEditComponent, canDeactivate: [preventUnsavedChangesGuard] },
     ]
   },
-  { path: 'errors', component: TestErrorComponent },
+  //{ path: 'errors', component: TestErrorComponent },
   { path: 'not-found', component: NotFound404Component },
   { path: 'server-error', component: ServerError500Component },
   { path: '**', component: NotFound404Component, pathMatch: 'full' },
