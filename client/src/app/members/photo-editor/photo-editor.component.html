@@ -26,7 +26,10 @@
         Drop photos here
     </div>
 
-    <input type="file" ng2FileSelect [uploader]="uploader" multiple />
+    <label class="btn btn-primary">
+      Upload photos
+      <input type="file" ng2FileSelect [uploader]="uploader" multiple hidden />
+    </label>
     <br />
   </div>
 
