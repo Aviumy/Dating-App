@@ -43,7 +43,9 @@
         <p>{{member.interests}}</p>
       </tab>
       <tab heading="Photos" #photoTab="tab">
-        <gallery class="gallery" *ngIf="photoTab.active" [items]="images" thumbPosition="bottom"></gallery>
+        <gallery class="gallery" *ngIf="photoTab.active && images.length"
+                 [items]="images" thumbPosition="bottom"></gallery>
+        <p *ngIf="photoTab.active && !images.length">User has no photos yet</p>
       </tab>
       <tab heading="Messages">
         <p>Messages will go here</p>
