@@ -8,7 +8,7 @@ export const preventUnsavedChangesGuard: CanDeactivateFn<MemberEditComponent> = 
   const accountService = inject(AccountService);
   const membersService = inject(MembersService);
 
-  if (component.editForm?.dirty) {
+  if (component.editForm?.dirty || membersService.hasUnsavedProfileChanges) {
     let result = confirm('If you leave the page, all changes will be lost. Do you want to proceed?')
     if (result) {
       membersService.hasUnsavedProfileChanges = false;

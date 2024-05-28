@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Member } from '../../_models/member';
 import { FileUploader } from 'ng2-file-upload';
 import { environment } from '../../../environments/environment.development';
@@ -83,6 +83,7 @@ export class PhotoEditorComponent implements OnInit {
 
     this.uploader.onAfterAddingFile = (file) => {
       file.withCredentials = false
+      this.membersService.hasUnsavedProfileChanges = true;
     }
 
     this.uploader.onSuccessItem = (item, response, status, headers) => {
@@ -92,6 +93,18 @@ export class PhotoEditorComponent implements OnInit {
           this.setMainPhoto(photo);
         this.member?.photos.push(photo);
       }
+    }
+
+    this.uploader.onCompleteItem = () => {
+      if (!this.uploader?.queue.length) {
+        this.membersService.hasUnsavedProfileChanges = false;
+      }
+    }
+  }
+
+  @HostListener('window:beforeunload', ['$event']) unloadNotification($event: any) {
+    if (this.membersService.hasUnsavedProfileChanges) {
+      $event.returnValue = true;
     }
   }
 }
