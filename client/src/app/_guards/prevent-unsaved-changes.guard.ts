@@ -15,6 +15,9 @@ export const preventUnsavedChangesGuard: CanDeactivateFn<MemberEditComponent> = 
       if (accountService.clickedLogOutButton)
         accountService.logout();
     }
+    else {
+      accountService.clickedLogOutButton = false;
+    }
     return result;
   }
   return true;
