@@ -3,21 +3,39 @@
   <hr />
   <div class="mb-3">
     <input type="text"
+           [class.is-invalid]="registerForm.get('username')?.errors && registerForm.get('username')?.touched"
            class="form-control"
            formControlName="username"
            placeholder="Username" />
+    <div class="invalid-feedback">
+      Enter a username
+    </div>
   </div>
   <div class="mb-3">
     <input type="password"
+           [class.is-invalid]="registerForm.get('password')?.errors && registerForm.get('password')?.touched"
            class="form-control"
            formControlName="password"
            placeholder="Password" />
+    <div class="invalid-feedback" *ngIf="registerForm.get('password')?.hasError('required')">
+      Enter a password
+    </div>
+    <div class="invalid-feedback" *ngIf="registerForm.get('password')?.hasError('minlength')">
+      Password should have at least 8 characters
+    </div>
   </div>
   <div class="mb-3">
     <input type="password"
+           [class.is-invalid]="registerForm.get('confirmPassword')?.errors && registerForm.get('confirmPassword')?.touched"
            class="form-control"
            formControlName="confirmPassword"
            placeholder="Repeat Password" />
+    <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword')?.hasError('required')">
+      Enter a password confirmation
+    </div>
+    <div class="invalid-feedback" *ngIf="registerForm.get('confirmPassword')?.hasError('notMatching')">
+      Password doesn't match
+    </div>
   </div>
   <div class="text-center">
     <button class="btn btn-primary me-2" type="submit">Register</button>
