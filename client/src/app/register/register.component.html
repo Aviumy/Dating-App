@@ -7,6 +7,18 @@
   <app-text-input [formControl]="$any(registerForm.controls['nickname'])"
                   [label]="'Nickname'"
                   [placeholder]="'Your nickname seen by others'"></app-text-input>
+  <div class="mb-3">
+    <select class="form-control"
+            [formControl]="$any(registerForm.controls['gender'])"
+            [class.is-invalid]="registerForm.get('gender')?.errors && registerForm.get('gender')?.touched">
+      <option value="" selected disabled>Gender</option>
+      <option>Male</option>
+      <option>Female</option>
+    </select>
+    <div class="invalid-feedback" *ngIf="registerForm.get('gender')?.hasError('required')">
+      Select a gender
+    </div>
+  </div>
   <app-text-input [formControl]="$any(registerForm.controls['password'])"
                   [label]="'Password'"
                   [type]="'password'"
@@ -15,6 +27,41 @@
                   [label]="'Password confirmation'"
                   [type]="'password'"
                   [placeholder]="'Confirm password'"></app-text-input>
+  <hr />
+  <div class="mb-3">
+    <input [formControl]="$any(registerForm.controls['dateOfBirth'])"
+           [class.is-invalid]="registerForm.get('dateOfBirth')?.errors && registerForm.get('dateOfBirth')?.touched"
+           class="form-control"
+           type="date"
+           max={{getDate18YearsBefore()}} />
+    <div class="invalid-feedback" *ngIf="registerForm.get('dateOfBirth')?.hasError('required')">
+      Enter a valid date of birth
+    </div>
+  </div>
+  <app-text-input [formControl]="$any(registerForm.controls['country'])"
+                  [label]="'Country'"
+                  [placeholder]="'Your country'"></app-text-input>
+  <app-text-input [formControl]="$any(registerForm.controls['city'])"
+                  [label]="'City'"
+                  [placeholder]="'Your city'"></app-text-input>
+  <div class="mb-3">
+    <textarea [formControl]="$any(registerForm.controls['introduction'])"
+              class="form-control"
+              placeholder="Few words about yourself"
+              rows="3"></textarea>
+  </div>
+  <div class="mb-3">
+    <textarea [formControl]="$any(registerForm.controls['lookingFor'])"
+              class="form-control"
+              placeholder="What people are you looking for?"
+              rows="3"></textarea>
+  </div>
+  <div class="mb-3">
+    <textarea [formControl]="$any(registerForm.controls['interests'])"
+              class="form-control"
+              placeholder="Your interests"
+              rows="3"></textarea>
+  </div>
   <div class="text-center">
     <button class="btn btn-primary me-2" type="submit">Register</button>
     <button class="btn btn-default" type="button" (click)="cancel()">Cancel</button>

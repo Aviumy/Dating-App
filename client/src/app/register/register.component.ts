@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AccountService } from '../_services/account.service';
-import { ToastrService } from 'ngx-toastr';
-import { AbstractControl, FormControl, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -13,17 +12,26 @@ export class RegisterComponent implements OnInit {
   model: any = {};
   registerForm: FormGroup = new FormGroup({});
 
-  constructor(public accountService: AccountService, private toastr: ToastrService) { }
+  constructor(public accountService: AccountService,
+              private fb: FormBuilder) { }
 
   ngOnInit(): void {
     this.initializeForm();
   }
 
   initializeForm() {
-    this.registerForm = new FormGroup({
-      username: new FormControl('', Validators.required),
-      password: new FormControl('', [Validators.required, Validators.minLength(8)]),
-      confirmPassword: new FormControl('', [Validators.required, this.matchValues('password')]),
+    this.registerForm = this.fb.group({
+      username: ['', Validators.required],
+      nickname: ['', Validators.required],
+      gender: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', [Validators.required, this.matchValues('password')]],
+      dateOfBirth: ['', Validators.required],
+      country: [''],
+      city: [''],
+      introduction: [''],
+      lookingFor: [''],
+      interests: [''],
     });
     this.registerForm.controls['password'].valueChanges.subscribe({
       next: () => this.registerForm.controls['confirmPassword'].updateValueAndValidity()
@@ -42,5 +50,13 @@ export class RegisterComponent implements OnInit {
 
   cancel() {
     this.cancelRegister.emit(false);
+  }
+
+  getDate18YearsBefore(): string {
+    let now = new Date();
+    let year = now.getUTCFullYear() - 18;
+    let month = now.getUTCMonth() + 1;
+    let day = now.getUTCDate();
+    return `${year}-${month < 10 ? "0" : ""}${month}-${day < 10 ? "0" : ""}${day}`;
   }
 }
