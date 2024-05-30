@@ -1,6 +1,7 @@
 <form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
   <h2 class="text-center text-primary">Sign up</h2>
   <hr />
+  <h5 class="text-center text-info">Who are you?</h5>
   <app-text-input [formControl]="$any(registerForm.controls['username'])"
                   [label]="'Username'"
                   [placeholder]="'Your unique username'"></app-text-input>
@@ -19,16 +20,8 @@
       Select a gender
     </div>
   </div>
-  <app-text-input [formControl]="$any(registerForm.controls['password'])"
-                  [label]="'Password'"
-                  [type]="'password'"
-                  [placeholder]="'Password'"></app-text-input>
-  <app-text-input [formControl]="$any(registerForm.controls['confirmPassword'])"
-                  [label]="'Password confirmation'"
-                  [type]="'password'"
-                  [placeholder]="'Confirm password'"></app-text-input>
-  <hr />
   <div class="mb-3">
+    <h5 class="text-center text-info">Date of Birth</h5>
     <input [formControl]="$any(registerForm.controls['dateOfBirth'])"
            [class.is-invalid]="registerForm.get('dateOfBirth')?.errors && registerForm.get('dateOfBirth')?.touched"
            class="form-control"
@@ -41,6 +34,18 @@
       You should be 18 or older
     </div>
   </div>
+  <h5 class="text-center text-info">Password</h5>
+  <app-text-input [formControl]="$any(registerForm.controls['password'])"
+                  [label]="'Password'"
+                  [type]="'password'"
+                  [placeholder]="'Password'"></app-text-input>
+  <app-text-input [formControl]="$any(registerForm.controls['confirmPassword'])"
+                  [label]="'Password confirmation'"
+                  [type]="'password'"
+                  [placeholder]="'Confirm password'"></app-text-input>
+  <hr />
+  <h5 class="text-center text-info">Additional Info</h5>
+  <h6 class="text-center text-info">You can change this later in your profile</h6>
   <app-text-input [formControl]="$any(registerForm.controls['country'])"
                   [label]="'Country'"
                   [placeholder]="'Your country'"></app-text-input>
