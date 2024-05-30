@@ -37,6 +37,9 @@
     <div class="invalid-feedback" *ngIf="registerForm.get('dateOfBirth')?.hasError('required')">
       Enter a valid date of birth
     </div>
+    <div class="invalid-feedback" *ngIf="registerForm.get('dateOfBirth')?.hasError('less18Years')">
+      You should be 18 or older
+    </div>
   </div>
   <app-text-input [formControl]="$any(registerForm.controls['country'])"
                   [label]="'Country'"

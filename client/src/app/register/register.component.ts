@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AccountService } from '../_services/account.service';
-import { AbstractControl, FormBuilder, FormGroup, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validator, ValidatorFn, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -26,7 +26,7 @@ export class RegisterComponent implements OnInit {
       gender: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', [Validators.required, this.matchValues('password')]],
-      dateOfBirth: ['', Validators.required],
+      dateOfBirth: ['', [Validators.required, this.maxDate(this.getDate18YearsBefore())]],
       country: [''],
       city: [''],
       introduction: [''],
@@ -41,6 +41,14 @@ export class RegisterComponent implements OnInit {
   matchValues(matchTo: string): ValidatorFn {
     return (control: AbstractControl) => {
       return control.value === control.parent?.get(matchTo)?.value ? null : {notMatching: true}
+    };
+  }
+
+  maxDate(date: string): ValidatorFn {
+    return (control: AbstractControl) => {
+      let date1 = new Date(control.value);
+      let date2 = new Date(date);
+      return date1 <= date2 ? null : { less18Years: true };
     };
   }
 
