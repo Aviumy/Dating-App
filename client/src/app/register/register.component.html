@@ -44,24 +44,15 @@
   <app-text-input [formControl]="$any(registerForm.controls['city'])"
                   [label]="'City'"
                   [placeholder]="'Your city'"></app-text-input>
-  <div class="mb-3">
-    <textarea [formControl]="$any(registerForm.controls['introduction'])"
-              class="form-control"
-              placeholder="Few words about yourself"
-              rows="3"></textarea>
-  </div>
-  <div class="mb-3">
-    <textarea [formControl]="$any(registerForm.controls['lookingFor'])"
-              class="form-control"
-              placeholder="What people are you looking for?"
-              rows="3"></textarea>
-  </div>
-  <div class="mb-3">
-    <textarea [formControl]="$any(registerForm.controls['interests'])"
-              class="form-control"
-              placeholder="Your interests"
-              rows="3"></textarea>
-  </div>
+  <app-textarea-input [formControl]="$any(registerForm.controls['introduction'])"
+                      [placeholder]="'Few words about yourself'"
+                      [rows]="3"></app-textarea-input>
+  <app-textarea-input [formControl]="$any(registerForm.controls['lookingFor'])"
+                      [placeholder]="'What people are you looking for?'"
+                      [rows]="3"></app-textarea-input>
+  <app-textarea-input [formControl]="$any(registerForm.controls['interests'])"
+                      [placeholder]="'Your interests'"
+                      [rows]="3"></app-textarea-input>
   <div class="text-center">
     <button class="btn btn-primary me-2" type="submit">Register</button>
     <button class="btn btn-default" type="button" (click)="cancel()">Cancel</button>
