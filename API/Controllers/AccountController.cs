@@ -32,8 +32,16 @@ namespace API.Controllers
             var user = new AppUser()
             {
                 UserName = registerDto.Username.ToLower(),
+                NickName = registerDto.Nickname,
+                Gender = registerDto.Gender.ToLower(),
+                DateOfBirth = registerDto.DateOfBirth,
+                Country = registerDto.Country.ToLower(),
+                City = registerDto.City.ToLower(),
+                Introduction = registerDto.Introduction,
+                LookingFor = registerDto.LookingFor,
+                Interests = registerDto.Interests,
                 PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                PasswordSalt = hmac.Key
+                PasswordSalt = hmac.Key,
             };
 
             _context.Users.Add(user);

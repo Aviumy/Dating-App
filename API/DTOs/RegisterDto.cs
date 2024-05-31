@@ -8,7 +8,20 @@ namespace API.DTOs
         [Required]
         public string Username { get; set; }
         [Required]
+        public string Nickname { get; set; }
+        [Required]
+        public string Gender { get; set; }
+        [Required]
+        public DateOnly DateOfBirth { get; set; }
+        [Required]
         public string Password { get; set; }
+        [Required]
+        public string ConfirmPassword { get; set; }
+        public string Introduction { get; set; }
+        public string LookingFor { get; set; }
+        public string Interests { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
