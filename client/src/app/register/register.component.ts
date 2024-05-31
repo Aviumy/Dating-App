@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AccountService } from '../_services/account.service';
 import { AbstractControl, FormBuilder, FormGroup, Validator, ValidatorFn, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -9,11 +10,11 @@ import { AbstractControl, FormBuilder, FormGroup, Validator, ValidatorFn, Valida
 })
 export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
-  model: any = {};
   registerForm: FormGroup = new FormGroup({});
 
   constructor(public accountService: AccountService,
-              private fb: FormBuilder) { }
+    private fb: FormBuilder,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.initializeForm();
@@ -53,7 +54,14 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    console.log(this.registerForm?.value);
+    this.accountService.register(this.registerForm.value).subscribe({
+      next: response => {
+        this.router.navigateByUrl('/members');
+      },
+      error: error => {
+        console.log(error);
+      },
+    });
   }
 
   cancel() {
