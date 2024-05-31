@@ -30,6 +30,10 @@ namespace API.DTOs
                 "12345678", "qwertyui", "qwertyuiop", "password",
             };
 
+            if (Password != ConfirmPassword)
+            {
+                yield return new ValidationResult("Password doesn't match.", [nameof(ConfirmPassword)]);
+            }
             if (Password.Length < 8)
             {
                 yield return new ValidationResult("Password should have at least 8 symbols.", [nameof(Password)]);
@@ -51,6 +55,10 @@ namespace API.DTOs
             if (commonPasswords.FirstOrDefault(x => x == Password) != null)
             {
                 yield return new ValidationResult("This password is common and weak, try another.", [nameof(Password)]);
+            }
+            if (DateOfBirth > DateOnly.FromDateTime(DateTime.UtcNow.AddYears(-18)))
+            {
+                yield return new ValidationResult("You should be 18 or older.", [nameof(DateOfBirth)]);
             }
         }
     }
