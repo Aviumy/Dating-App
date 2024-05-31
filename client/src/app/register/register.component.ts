@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
   registerForm: FormGroup = new FormGroup({});
+  validationErrors: string[] = [];
 
   constructor(public accountService: AccountService,
     private fb: FormBuilder,
@@ -59,7 +60,16 @@ export class RegisterComponent implements OnInit {
         this.router.navigateByUrl('/members');
       },
       error: error => {
-        console.log(error);
+        if (error.error.errors) {
+          this.validationErrors = [];
+          for (const key in error.error.errors) {
+            if (error.error.errors[key]) {
+              for (const err of error.error.errors[key]) {
+                this.validationErrors.push(err);
+              }
+            }
+          }
+        }
       },
     });
   }
