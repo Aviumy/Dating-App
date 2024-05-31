@@ -62,7 +62,7 @@
                       [placeholder]="'Your interests'"
                       [rows]="3"></app-textarea-input>
   <div class="text-center">
-    <button class="btn btn-primary me-2" type="submit">Register</button>
+    <button [disabled]="!registerForm.valid" class="btn btn-primary me-2" type="submit">Register</button>
     <button class="btn btn-default" type="button" (click)="cancel()">Cancel</button>
   </div>
 </form>
