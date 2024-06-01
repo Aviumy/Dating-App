@@ -34,13 +34,13 @@
     <tabset class="member-tabset">
       <tab heading="About {{member.nickName}}">
         <h4>Description</h4>
-        <p>{{member.introduction}}</p>
+        <p>{{member.introduction || "User didn't introduce itself"}}</p>
         <h4>Looking for</h4>
-        <p>{{member.lookingFor}}</p>
+        <p>{{member.lookingFor || "User currently doesn't look for anybody"}}</p>
       </tab>
       <tab heading="Interests">
         <h4>Interests</h4>
-        <p>{{member.interests}}</p>
+        <p>{{member.interests || "User haven't added its interests yet"}}</p>
       </tab>
       <tab heading="Photos" #photoTab="tab">
         <gallery class="gallery" *ngIf="photoTab.active && images.length"
