@@ -15,7 +15,11 @@
       <div class="card-body">
         <div>
           <strong>Location: </strong>
-          <p>{{member.city | titlecase}}, {{member.country | titlecase}}</p>
+          <p *ngIf="!(member.city || member.country)">Unknown</p>
+          <p>
+            {{member.city | titlecase}}{{member.city && member.country ? ', ' : ''}}
+            {{member.country | titlecase}}
+          </p>
         </div>
         <div>
           <strong>Age:</strong>
