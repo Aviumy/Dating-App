@@ -11,7 +11,9 @@ namespace API.Extensions
     {
         public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddIdentityCore<AppUser>(options => { })
+            services.AddIdentityCore<AppUser>(options => {
+                options.Password.RequireUppercase = false;
+            })
                 .AddRoles<AppRole>()
                 .AddRoleManager<RoleManager<AppRole>>()
                 .AddEntityFrameworkStores<DataContext>();
