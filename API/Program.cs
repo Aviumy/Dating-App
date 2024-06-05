@@ -44,7 +44,8 @@ try
     await context.Database.MigrateAsync();
 
     var userManager = services.GetRequiredService<UserManager<AppUser>>();
-    await new DataSeeder().Seed(userManager);
+    var roleManager = services.GetRequiredService<RoleManager<AppRole>>();
+    await new DataSeeder().Seed(userManager, roleManager);
 }
 catch (Exception ex)
 {

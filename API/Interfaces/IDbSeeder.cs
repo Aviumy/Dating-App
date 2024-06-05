@@ -5,6 +5,6 @@ namespace API.Interfaces
 {
     public interface IDbSeeder
     {
-        Task Seed(UserManager<AppUser> userManager);
+        Task Seed(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager);
     }
 }
