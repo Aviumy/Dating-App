@@ -38,6 +38,7 @@ var services = scope.ServiceProvider;
 try
 {
     var context = services.GetRequiredService<DataContext>();
+    //await context.Database.EnsureDeletedAsync();
     await context.Database.MigrateAsync();
     await new DataSeeder().Seed(context);
 }
