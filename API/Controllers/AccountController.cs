@@ -2,21 +2,20 @@
 using API.DTOs;
 using API.Entities;
 using API.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace API.Controllers
 {
     public class AccountController : BaseApiController
     {
-        private readonly DataContext _context;
+        private readonly UserManager<AppUser> _userManager;
         private readonly ITokenService _tokenService;
 
-        public AccountController(DataContext context, ITokenService tokenService)
+        public AccountController(UserManager<AppUser> userManager, ITokenService tokenService)
         {
-            _context = context;
+            _userManager = userManager;
             _tokenService = tokenService;
         }
 
@@ -28,7 +27,6 @@ namespace API.Controllers
                 return BadRequest("This username is taken");
             }
 
-            using var hmac = new HMACSHA512();
             var user = new AppUser()
             {
                 UserName = registerDto.Username.ToLower(),
@@ -40,12 +38,13 @@ namespace API.Controllers
                 Introduction = registerDto.Introduction,
                 LookingFor = registerDto.LookingFor,
                 Interests = registerDto.Interests,
-                //PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                //PasswordSalt = hmac.Key,
             };
 
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            var result = await _userManager.CreateAsync(user, registerDto.Password);
+            if (!result.Succeeded)
+            {
+                return BadRequest(result.Errors);
+            }
 
             return new UserDto
             {
@@ -57,19 +56,18 @@ namespace API.Controllers
         [HttpPost("login")]  // POST: api/account/login
         public async Task<ActionResult<UserDto>> Login([FromBody] LoginDto loginDto)
         {
-            var user = await _context.Users.Include(x => x.Photos)
+            var user = await _userManager.Users.Include(x => x.Photos)
                 .FirstOrDefaultAsync(x => x.UserName == loginDto.Username.ToLower());
             if (user == null)
             {
                 return Unauthorized("There is no such user");
             }
 
-            //using var hmac = new HMACSHA512(user.PasswordSalt);
-            //var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-            //if (!computedHash.SequenceEqual(user.PasswordHash))
-            //{
-            //    return Unauthorized("Wrong password");
-            //}
+            var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
+            if (!result)
+            {
+                return Unauthorized("Wrong password");
+            }
 
             return new UserDto
             {
@@ -81,7 +79,7 @@ namespace API.Controllers
 
         private async Task<bool> UserExists(string username)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == username.ToLower());
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.UserName == username.ToLower());
             return user != null;
         }
     }
