@@ -40,8 +40,8 @@ namespace API.Controllers
                 Introduction = registerDto.Introduction,
                 LookingFor = registerDto.LookingFor,
                 Interests = registerDto.Interests,
-                PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
-                PasswordSalt = hmac.Key,
+                //PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(registerDto.Password)),
+                //PasswordSalt = hmac.Key,
             };
 
             _context.Users.Add(user);
@@ -64,12 +64,12 @@ namespace API.Controllers
                 return Unauthorized("There is no such user");
             }
 
-            using var hmac = new HMACSHA512(user.PasswordSalt);
-            var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
-            if (!computedHash.SequenceEqual(user.PasswordHash))
-            {
-                return Unauthorized("Wrong password");
-            }
+            //using var hmac = new HMACSHA512(user.PasswordSalt);
+            //var computedHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(loginDto.Password));
+            //if (!computedHash.SequenceEqual(user.PasswordHash))
+            //{
+            //    return Unauthorized("Wrong password");
+            //}
 
             return new UserDto
             {

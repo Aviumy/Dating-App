@@ -23,13 +23,13 @@ namespace API.Data
                 users = serializer.Deserialize<List<AppUser>>(jsonTextReader);
             }
 
-            foreach (var user in users)
-            {
-                using var hmac = new HMACSHA512();
-                user.UserName = user.UserName.ToLower();
-                user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("asdf123_"));
-                user.PasswordSalt = hmac.Key;
-            }
+            //foreach (var user in users)
+            //{
+                //using var hmac = new HMACSHA512();
+                //user.UserName = user.UserName.ToLower();
+                //user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("asdf123_"));
+                //user.PasswordSalt = hmac.Key;
+            //}
 
             await dataContext.Users.AddRangeAsync(users);
             await dataContext.SaveChangesAsync();

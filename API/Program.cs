@@ -40,7 +40,7 @@ try
     var context = services.GetRequiredService<DataContext>();
     //await context.Database.EnsureDeletedAsync();
     await context.Database.MigrateAsync();
-    await new DataSeeder().Seed(context);
+    //await new DataSeeder().Seed(context);
 }
 catch (Exception ex)
 {
