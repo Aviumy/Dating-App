@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using API.Entities;
+using Microsoft.AspNetCore.Identity;
 
 namespace API.Interfaces
 {
     public interface IDbSeeder
     {
-        Task Seed(DbContext context);
+        Task Seed(UserManager<AppUser> userManager);
     }
 }

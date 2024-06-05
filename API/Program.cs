@@ -1,6 +1,8 @@
 using API.Data;
+using API.Entities;
 using API.Extensions;
 using API.Middleware;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -40,7 +42,9 @@ try
     var context = services.GetRequiredService<DataContext>();
     //await context.Database.EnsureDeletedAsync();
     await context.Database.MigrateAsync();
-    //await new DataSeeder().Seed(context);
+
+    var userManager = services.GetRequiredService<UserManager<AppUser>>();
+    await new DataSeeder().Seed(userManager);
 }
 catch (Exception ex)
 {

@@ -1,18 +1,16 @@
 ﻿using API.Entities;
 using API.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace API.Data
 {
     public class DataSeeder : IDbSeeder
     {
-        public async Task Seed(DbContext context)
+        public async Task Seed(UserManager<AppUser> userManager)
         {
-            var dataContext = context as DataContext;            
-            if (await dataContext.Users.AnyAsync())
+            if (await userManager.Users.AnyAsync())
                 return;
 
             var serializer = new JsonSerializer();
@@ -23,16 +21,11 @@ namespace API.Data
                 users = serializer.Deserialize<List<AppUser>>(jsonTextReader);
             }
 
-            //foreach (var user in users)
-            //{
-                //using var hmac = new HMACSHA512();
-                //user.UserName = user.UserName.ToLower();
-                //user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("asdf123_"));
-                //user.PasswordSalt = hmac.Key;
-            //}
-
-            await dataContext.Users.AddRangeAsync(users);
-            await dataContext.SaveChangesAsync();
+            foreach (var user in users)
+            {
+                user.UserName = user.UserName.ToLower();
+                await userManager.CreateAsync(user, "asdf123_");
+            }
         }
     }
 }
