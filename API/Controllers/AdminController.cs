@@ -30,6 +30,36 @@ namespace API.Controllers
             return Ok(users);
         }
 
+        [Authorize(Policy = "RequireAdminRole")]
+        // Should be HttpPut since we are editing an existing user,
+        // but we want updated list of roles to be returned
+        [HttpPost("edit-roles/{username}")]
+        public async Task<ActionResult> EditRoles(string username, [FromQuery] string roles)
+        {
+            if (string.IsNullOrEmpty(roles))
+                return BadRequest("Select at least one role");
+
+            var selectedRoles = roles.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries).ToArray();
+
+            var user = await _userManager.FindByNameAsync(username);
+            if (user == null)
+                return NotFound();
+
+            var existingRoles = await _userManager.GetRolesAsync(user);
+
+            var result = await _userManager.AddToRolesAsync(user, 
+                selectedRoles.Except(existingRoles));
+            if (!result.Succeeded)
+                return BadRequest("Failed to add to roles");
+
+            result = await _userManager.RemoveFromRolesAsync(user, 
+                existingRoles.Except(selectedRoles));
+            if (!result.Succeeded)
+                return BadRequest("Failed to remove from roles");
+
+            return Ok(await _userManager.GetRolesAsync(user));
+        }
+
         [Authorize(Policy = "ModeratePhotoRole")]
         [HttpGet("photos-to-moderate")]
         public ActionResult GetPhotosForModeration()
