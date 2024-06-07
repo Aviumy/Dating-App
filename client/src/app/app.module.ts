@@ -25,6 +25,7 @@ import { LoadingInterceptor } from './_interceptors/loading.interceptor';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { TextInputComponent } from './_forms/text-input/text-input.component';
 import { TextareaInputComponent } from './_forms/textarea-input/textarea-input.component';
+import { AdminPanelComponent } from './admin/admin-panel/admin-panel.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { TextareaInputComponent } from './_forms/textarea-input/textarea-input.c
     PhotoEditorComponent,
     TextInputComponent,
     TextareaInputComponent,
+    AdminPanelComponent,
   ],
   imports: [
     BrowserModule,
