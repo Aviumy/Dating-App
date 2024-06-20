@@ -9,11 +9,13 @@ namespace API.Controllers
     public class AdminController : BaseApiController
     {
         private readonly UserManager<AppUser> _userManager;
+		private readonly RoleManager<AppRole> _roleManager;
 
-        public AdminController(UserManager<AppUser> userManager)
+		public AdminController(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
         {
             _userManager = userManager;
-        }
+			_roleManager = roleManager;
+		}
 
         [Authorize(Policy = "RequireAdminRole")]
         [HttpGet("users-with-roles")]
@@ -28,6 +30,14 @@ namespace API.Controllers
                 }).ToListAsync();
 
             return Ok(users);
+        }
+
+        [Authorize(Policy = "RequireAdminRole")]
+        [HttpGet("roles")]
+        public async Task<ActionResult> GetAllRoles()
+        {
+            var roles = await _roleManager.Roles.Select(r => r.Name).ToListAsync();
+            return Ok(roles);
         }
 
         [Authorize(Policy = "RequireAdminRole")]

@@ -11,18 +11,25 @@ import { RolesModalComponent } from '../../modals/roles-modal/roles-modal.compon
 })
 export class UserManagementComponent implements OnInit {
   users: User[] = [];
-  availableRoles: string[] = ['Member', 'Admin', 'Moderator'];
+  availableRoles: string[] = [];
   bsModalRef: BsModalRef<RolesModalComponent> = new BsModalRef<RolesModalComponent>();
 
   constructor(private adminService: AdminService, private modalService: BsModalService) { }
 
   ngOnInit(): void {
+    this.getAllRoles();
     this.getUsersWithRoles();
   }
 
   getUsersWithRoles() {
     return this.adminService.getUsersWithRoles().subscribe({
       next: users => this.users = users
+    });
+  }
+
+  getAllRoles() {
+    return this.adminService.getAllRoles().subscribe({
+      next: roles => this.availableRoles = roles
     });
   }
 
