@@ -6,10 +6,9 @@ import { provideAnimations } from "@angular/platform-browser/animations";
 import { errorInterceptor } from "./_interceptors/error.interceptor";
 import { jwtInterceptor } from "./_interceptors/jwt.interceptor";
 import { loadingInterceptor } from "./_interceptors/loading.interceptor";
-import { BrowserModule } from "@angular/platform-browser";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { SharedModule } from "./_modules/shared.module";
 import { provideToastr } from "ngx-toastr";
+import { NgxSpinnerModule } from "ngx-spinner";
+import { ModalModule } from "ngx-bootstrap/modal";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideToastr({
       positionClass: 'toast-bottom-right',
     }),
-    importProvidersFrom(BrowserModule, FormsModule, ReactiveFormsModule, SharedModule),
+    importProvidersFrom(NgxSpinnerModule, ModalModule.forRoot()),
     provideHttpClient(
       withInterceptors([errorInterceptor, jwtInterceptor, loadingInterceptor]),
       withInterceptorsFromDi()
