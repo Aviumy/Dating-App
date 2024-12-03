@@ -1,12 +1,17 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AccountService } from '../_services/account.service';
-import { AbstractControl, FormBuilder, FormGroup, Validator, ValidatorFn, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validator, ValidatorFn, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { TextareaInputComponent } from '../_forms/textarea-input/textarea-input.component';
+import { NgIf, NgFor } from '@angular/common';
+import { TextInputComponent } from '../_forms/text-input/text-input.component';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.css'],
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule, TextInputComponent, NgIf, NgFor, TextareaInputComponent]
 })
 export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();

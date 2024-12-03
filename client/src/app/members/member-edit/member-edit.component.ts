@@ -5,12 +5,17 @@ import { AccountService } from '../../_services/account.service';
 import { MembersService } from '../../_services/members.service';
 import { take } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormsModule } from '@angular/forms';
+import { PhotoEditorComponent } from '../photo-editor/photo-editor.component';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { NgIf, TitleCasePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-member-edit',
-  templateUrl: './member-edit.component.html',
-  styleUrls: ['./member-edit.component.css']
+    selector: 'app-member-edit',
+    templateUrl: './member-edit.component.html',
+    styleUrls: ['./member-edit.component.css'],
+    standalone: true,
+    imports: [NgIf, TabsModule, FormsModule, PhotoEditorComponent, TitleCasePipe]
 })
 export class MemberEditComponent implements OnInit {
   @ViewChild('editForm') editForm: NgForm | undefined;

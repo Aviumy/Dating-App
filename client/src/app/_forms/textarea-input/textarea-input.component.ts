@@ -1,10 +1,12 @@
 import { Component, Input, Self } from '@angular/core';
-import { ControlValueAccessor, FormControl, NgControl } from '@angular/forms';
+import { ControlValueAccessor, FormControl, NgControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-textarea-input',
-  templateUrl: './textarea-input.component.html',
-  styleUrls: ['./textarea-input.component.css']
+    selector: 'app-textarea-input',
+    templateUrl: './textarea-input.component.html',
+    styleUrls: ['./textarea-input.component.css'],
+    standalone: true,
+    imports: [FormsModule, ReactiveFormsModule]
 })
 export class TextareaInputComponent implements ControlValueAccessor {
   @Input() placeholder = '';

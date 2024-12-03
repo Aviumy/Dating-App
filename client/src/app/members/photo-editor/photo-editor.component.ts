@@ -1,17 +1,20 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { Member } from '../../_models/member';
-import { FileUploader } from 'ng2-file-upload';
+import { FileUploader, FileUploadModule } from 'ng2-file-upload';
 import { environment } from '../../../environments/environment.development';
 import { User } from '../../_models/user';
 import { AccountService } from '../../_services/account.service';
 import { take } from 'rxjs';
 import { Photo } from '../../_models/photo';
 import { MembersService } from '../../_services/members.service';
+import { NgIf, NgFor, NgClass, NgStyle, DecimalPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-photo-editor',
-  templateUrl: './photo-editor.component.html',
-  styleUrls: ['./photo-editor.component.css']
+    selector: 'app-photo-editor',
+    templateUrl: './photo-editor.component.html',
+    styleUrls: ['./photo-editor.component.css'],
+    standalone: true,
+    imports: [NgIf, NgFor, FileUploadModule, NgClass, NgStyle, DecimalPipe]
 })
 export class PhotoEditorComponent implements OnInit {
   @Input() member: Member | undefined;
