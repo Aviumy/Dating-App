@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Member } from '../../_models/member';
 import { MembersService } from '../../_services/members.service';
 import { CommonModule } from '@angular/common';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-member-details',
@@ -15,7 +16,7 @@ import { GalleryItem, GalleryModule, ImageItem } from 'ng-gallery';
   ],
 })
 export class MemberDetailsComponent implements OnInit {
-  @Input() username: string = '';
+  private route = inject(ActivatedRoute);
   member: Member | undefined;
   images: GalleryItem[] = [];
 
@@ -26,7 +27,11 @@ export class MemberDetailsComponent implements OnInit {
   }
 
   loadMember() {
-    this.membersService.getMember(this.username).subscribe({
+    const username = this.route.snapshot.paramMap.get('username');
+    if (!username) {
+      return;
+    }
+    this.membersService.getMember(username).subscribe({
       next: member => {
         this.member = member;
         this.loadPhotos();
