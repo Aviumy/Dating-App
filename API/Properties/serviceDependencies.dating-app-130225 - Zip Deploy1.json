@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/Dating-App-13022025-API/apis/Dating-App-13022025-API",
+      "type": "apis.azure"
+    }
+  }
+}
