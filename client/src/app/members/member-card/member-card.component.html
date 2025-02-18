@@ -20,6 +20,11 @@
       <i class="fa fa-user me-2"></i>
       {{member.nickName}}
     </h6>
-    <p class="card-text text-muted text-center">{{member.city | titlecase}}</p>
+    @if (!member.city && member.country) {
+      <p class="card-text text-muted text-center">{{member.country | titlecase}}</p>
+    }
+    @else {
+      <p class="card-text text-muted text-center">{{member.city | titlecase}}</p>
+    }
   </div>
 </div>
